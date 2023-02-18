@@ -1,0 +1,52 @@
+from django.db import models
+
+class Articulo(models.Model):
+    nombre = models.CharField(max_length=200)
+    marca = models.CharField(max_length=200)
+    categoria = models.CharField(max_length=200)
+    precio_unitario = models.FloatField
+    stock = models.IntegerField
+    disponible = models.BooleanField(default=False)
+
+    def __str__(self):
+        print("\Detalles del articulo:")
+        return(f"""
+        Nombre : {self.nombre}
+        Marca: {self.marca}
+        Precio: $ {self.precio_unitario}
+        Categoria: {self.categoria}
+        """+"\n")
+    
+
+class Cliente(models.Model):
+    nombre = models.CharField(max_length=200)
+    email = models.CharField(max_length=200)
+    fecha_ultima_compra = models.DateField
+    habilitado = models.BooleanField(default=True)
+
+    def __str__(self):
+        print("\nDatos del cliente:")
+        return(f"""
+        Nombre : {self.nombre}
+        Email: {self.email}
+        Fecha de última compra: {self.fecha_ultima_compra}
+        """+"\n")
+
+class ItemCarrito(models.Model):
+    articulo = models.ForeignKey(Articulo, on_delete=models.CASCADE)
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    cantidad = models.IntegerField
+
+    def __str__(self):
+        return(f"""
+        Nombre : {self.articulo.nombre}
+        Precio: $ {self.articulo.precio_unitario}
+        Cantidad: {self.cantidad}
+        Suma parcial : $ {self.articulo.precio_unitario*self.cantidad}
+        """+"\n")
+    
+    def agregar(self):
+        self.cantidad+=1
+        
+    def quitar(self):
+        self.cantidad-=1
