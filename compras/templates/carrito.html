@@ -1,5 +1,5 @@
 {% extends "app.html" %} {% load static %} {% block contenidoQueCambia %}
-<h1>Carrito</h1>
+<h1>Carrito de {{cliente.nombre}}</h1>
 <table>
   <thead>
     <tr>
@@ -13,12 +13,12 @@
   <tbody>
     {% for i in carrito %}
     <tr>
-      <td>{{i.articulo.nombre}}</td>
+      <td>{{i.articulo.marca}}{{" "}}{{i.articulo.nombre}}</td>
       <td>{{i.articulo.precio_unitario}}</td>
       <td>{{i.cantidad}}</td>
       <td>{{i.suma_parcial}}</td>
       <td>
-        <a href="{% url 'EliminarItem' i.id %}"
+        <a href="{% url 'EliminarItem' i.id cliente.id %}"
           ><div class="botonPeligro">Eliminar</div></a
         >
       </td>
@@ -27,15 +27,10 @@
   </tbody>
 </table>
 <br />
-{% if miFormulario.errors %}
 
-<p style="color: red">Error en los datos ingresados</p>
-
-{% endif %}
-
-<form autocomplete="off" action="" method="POST">
-  {% csrf_token %} {{miFormulario.as_table}}
-
-  <input type="submit" value="Enviar" />
-</form>
+<div style="display: inline-block">
+  <a href="{% url 'BuscarArticulos' cliente.id %}"
+    ><div class="botonSeguro botonGrande">Seguir comprando</div></a
+  >
+</div>
 {% endblock %}

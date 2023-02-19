@@ -6,10 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kwik-E-Mart Online</title>
     <style>
+      body {
+        background-color: rgb(27, 27, 27);
+        color: white;
+      }
       table,
       th,
       td {
-        border: 2px solid black;
+        border: 2px solid rgb(98, 98, 98);
       }
       table {
         width: 100%;
@@ -19,16 +23,30 @@
         background-color: rgb(164, 74, 74);
         cursor: pointer;
         text-align: center;
-        color: white;
       }
       .botonInfo {
         background-color: rgb(47, 92, 110);
         cursor: pointer;
         text-align: center;
-        color: white;
       }
-      .a {
-        text-decoration: none;
+      .botonSeguro {
+        background-color: rgb(84, 141, 65);
+        cursor: pointer;
+        text-align: center;
+      }
+      .botonGrande {
+        min-height: 2rem;
+        display: flex;
+        align-items: center;
+        padding: 0.5rem;
+      }
+      a {
+        text-decoration: none !important;
+        cursor: pointer;
+        color: inherit;
+      }
+      a:hover {
+        color: #9b9b9b;
       }
     </style>
   </head>
@@ -39,8 +57,7 @@
       <div>
         <a href="{% url 'Inicio' %}">Inicio</a>
         <a href="{% url 'Clientes' %}">Clientes</a>
-        <a href="{% url 'Articulos' %}">Articulos</a>
-        <a href="{% url 'Carrito' %}">Carrito</a>
+        <a href="{% url 'Articulos' %}">Artículos</a>
       </div>
     </nav>
     {% block contenidoQueCambia %} {% endblock %}

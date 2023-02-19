@@ -3,7 +3,7 @@
 <table>
   <thead>
     <tr>
-      <th>Carrito</th>
+      <th>Compras</th>
       <th>Nombre</th>
       <th>Email</th>
       <th>Fecha Última Compra</th>
@@ -15,7 +15,14 @@
     {% for c in clientes %}
     <tr>
       <td>
-        <a href="{% url 'Carrito' %}"><div class="botonInfo">Ver</div></a>
+        <div style="display: flex; justify-content: space-between; gap: 0.5rem">
+          <a href="{% url 'Carrito' c.id %}" style="width: 100%"
+            ><div class="botonInfo">Carrito</div></a
+          >
+          <a href="{% url 'BuscarArticulos' c.id %}" style="width: 100%"
+            ><div class="botonInfo">Buscar</div></a
+          >
+        </div>
       </td>
       <td>{{c.nombre}}</td>
       <td>{{c.email}}</td>
@@ -30,7 +37,7 @@
     {% endfor %}
   </tbody>
 </table>
-<br />
+<h2>Agregar Cliente</h2>
 {% if miFormulario.errors %}
 
 <p style="color: red">Error en los datos ingresados</p>

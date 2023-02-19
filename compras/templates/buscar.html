@@ -1,0 +1,58 @@
+{% extends "app.html" %} {% load static %} {% block contenidoQueCambia %}
+<h1>Buscar Artículos para {{cliente.nombre}}</h1>
+
+<form action="/compras/buscarArticulos/{{cliente.id}}" method="GET">
+  <label for="categoria">Categoria</label>
+  <input type="text" name="categoria" id="categoria" value="{{categoria}}" />
+  <label for="nombre">Nombre</label>
+  <input type="text" name="nombre" id="nombre" value="{{nombre}}" />
+  <label for="marca">Marca</label>
+  <input type="text" name="marca" id="marca" value="{{marca}}" />
+  <input type="submit" value="Buscar" />
+</form>
+<br />
+<table>
+  <thead>
+    <tr>
+      <th>Categoria</th>
+      <th>Nombre</th>
+      <th>Marca</th>
+      <th>Precio Unitario</th>
+      <th>Stock</th>
+      <th>Disponible</th>
+      <th>Acción</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for a in articulos %}
+    <tr>
+      <td>{{a.categoria}}</td>
+      <td>{{a.nombre}}</td>
+      <td>{{a.marca}}</td>
+      <td>{{a.precio_unitario}}</td>
+      <td>{{a.stock}}</td>
+      <td>{{a.disponible}}</td>
+      <td>
+        {% if a.disponible %}
+        <form
+          action="/compras/agregarItem/{{a.id}}/{{cliente.id}}"
+          method="POST"
+        >
+          {% csrf_token %}
+          <input
+            type="number"
+            name="cantidad"
+            id="cantidad"
+            value="1"
+            min="1"
+            max="{{a.stock}}"
+          />
+          <input class="botonSeguro" type="submit" value="Agregar" />{% endif %}
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

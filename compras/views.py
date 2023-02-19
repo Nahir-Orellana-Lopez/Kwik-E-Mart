@@ -61,28 +61,50 @@ def eliminarArticulo(request, articulo_id):
     articulo.delete()
     return HttpResponseRedirect('/compras/articulos')
 
-def carrito(request):
-    miFormulario = ItemFormulario()
-    if request.method == 'POST':
-        miFormulario = ItemFormulario(request.POST)
-        
-        if miFormulario.is_valid():
-            informacion = miFormulario.cleaned_data
-            item = ItemCarrito(cantidad=informacion['cantidad'],
-                            articulo=Articulo(id=1),
-                            cliente=Cliente(id=1))
-            item.save()
-            return HttpResponseRedirect("/compras/carrito")
-             
-    carrito = ItemCarrito.objects.all()
+def carrito(request, cliente_id):     
+    carrito = ItemCarrito.objects.all().filter(cliente_id=cliente_id)
     for i in carrito:
         i.suma_parcial = i.articulo.precio_unitario * i.cantidad
-    contexto = {"carrito": carrito, "miFormulario": miFormulario}
+    cliente = Cliente.objects.get(pk=cliente_id)
+    contexto = {"cliente": cliente,"carrito": carrito}
     plantilla = loader.get_template("carrito.html")
     documento = plantilla.render(contexto,request)
     return HttpResponse(documento)
 
-def eliminarItem(request, item_id):
+def eliminarItem(request, item_id, cliente_id):
     item = ItemCarrito.objects.get(id=item_id)
     item.delete()
-    return HttpResponseRedirect('/compras/carrito')
+    return HttpResponseRedirect('/compras/carrito/'+cliente_id)
+
+def agregarItem(request, articulo_id, cliente_id):
+    cantidad = request.POST.get('cantidad', 0)
+    if(int(cantidad)>0):
+        item = ItemCarrito(cantidad=cantidad,
+                            articulo=Articulo(id=articulo_id),
+                            cliente=Cliente(id=cliente_id))
+        item.save()
+    return HttpResponseRedirect('/compras/carrito/'+cliente_id)
+
+def buscarArticulos(request, cliente_id):
+    cliente = Cliente.objects.get(pk=cliente_id)
+    categoria = request.GET.get('categoria', '')
+    nombre = request.GET.get('nombre', '')
+    marca = request.GET.get('marca', '')
+    articulos = Articulo.objects.filter(categoria__icontains=categoria,
+                                        nombre__icontains=nombre,
+                                        marca__icontains=marca)
+    return render(request, "buscar.html", {"cliente":cliente, "articulos":articulos,
+                                           "categoria":categoria, "nombre":nombre, "marca":marca})
+    
+
+# miFormulario = ItemFormulario()
+# if request.method == 'POST':
+#     miFormulario = ItemFormulario(request.POST)
+    
+#     if miFormulario.is_valid():
+#         informacion = miFormulario.cleaned_data
+#         item = ItemCarrito(cantidad=informacion['cantidad'],
+#                         articulo=Articulo(id=1),
+#                         cliente=Cliente(id=cliente_id))
+#         item.save()
+#         return HttpResponseRedirect("/compras/carrito/"+cliente_id)
