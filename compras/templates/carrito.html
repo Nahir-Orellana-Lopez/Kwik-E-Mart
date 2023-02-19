@@ -1,0 +1,41 @@
+{% extends "app.html" %} {% load static %} {% block contenidoQueCambia %}
+<h1>Carrito</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Precio Unitario</th>
+      <th>Cantidad</th>
+      <th>Suma Parcial</th>
+      <th>Acción</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in carrito %}
+    <tr>
+      <td>{{i.articulo.nombre}}</td>
+      <td>{{i.articulo.precio_unitario}}</td>
+      <td>{{i.cantidad}}</td>
+      <td>{{i.suma_parcial}}</td>
+      <td>
+        <a href="{% url 'EliminarItem' i.id %}"
+          ><div class="botonPeligro">Eliminar</div></a
+        >
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<br />
+{% if miFormulario.errors %}
+
+<p style="color: red">Error en los datos ingresados</p>
+
+{% endif %}
+
+<form autocomplete="off" action="" method="POST">
+  {% csrf_token %} {{miFormulario.as_table}}
+
+  <input type="submit" value="Enviar" />
+</form>
+{% endblock %}

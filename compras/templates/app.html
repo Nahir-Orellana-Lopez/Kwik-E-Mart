@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kwik-E-Mart Online</title>
+    <style>
+      table,
+      th,
+      td {
+        border: 2px solid black;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .botonPeligro {
+        background-color: rgb(164, 74, 74);
+        cursor: pointer;
+        text-align: center;
+        color: white;
+      }
+      .botonInfo {
+        background-color: rgb(47, 92, 110);
+        cursor: pointer;
+        text-align: center;
+        color: white;
+      }
+      .a {
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation-->
+    <nav style="display: flex; justify-content: space-between">
+      <div>Kwik-E-Mart Online</div>
+      <div>
+        <a href="{% url 'Inicio' %}">Inicio</a>
+        <a href="{% url 'Clientes' %}">Clientes</a>
+        <a href="{% url 'Articulos' %}">Articulos</a>
+        <a href="{% url 'Carrito' %}">Carrito</a>
+      </div>
+    </nav>
+    {% block contenidoQueCambia %} {% endblock %}
+  </body>
+</html>

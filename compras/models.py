@@ -1,15 +1,15 @@
 from django.db import models
+from datetime import datetime
 
 class Articulo(models.Model):
     nombre = models.CharField(max_length=200)
     marca = models.CharField(max_length=200)
     categoria = models.CharField(max_length=200)
-    precio_unitario = models.FloatField
-    stock = models.IntegerField
+    precio_unitario = models.FloatField(default=0.0)
+    stock = models.IntegerField(default=0)
     disponible = models.BooleanField(default=False)
 
     def __str__(self):
-        print("\Detalles del articulo:")
         return(f"""
         Nombre : {self.nombre}
         Marca: {self.marca}
@@ -20,12 +20,11 @@ class Articulo(models.Model):
 
 class Cliente(models.Model):
     nombre = models.CharField(max_length=200)
-    email = models.CharField(max_length=200)
-    fecha_ultima_compra = models.DateField
+    email = models.EmailField(max_length=200, null=True)
+    fecha_ultima_compra = models.DateField(default=datetime.now())
     habilitado = models.BooleanField(default=True)
 
     def __str__(self):
-        print("\nDatos del cliente:")
         return(f"""
         Nombre : {self.nombre}
         Email: {self.email}
@@ -35,7 +34,7 @@ class Cliente(models.Model):
 class ItemCarrito(models.Model):
     articulo = models.ForeignKey(Articulo, on_delete=models.CASCADE)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-    cantidad = models.IntegerField
+    cantidad = models.IntegerField(default=0)
 
     def __str__(self):
         return(f"""

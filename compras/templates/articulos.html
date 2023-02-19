@@ -1,0 +1,45 @@
+{% extends "app.html" %} {% load static %} {% block contenidoQueCambia %}
+<h1>Articulos</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Categoria</th>
+      <th>Nombre</th>
+      <th>Marca</th>
+      <th>Precio Unitario</th>
+      <th>Stock</th>
+      <th>Disponible</th>
+      <th>Acción</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for a in articulos %}
+    <tr>
+      <td>{{a.categoria}}</td>
+      <td>{{a.nombre}}</td>
+      <td>{{a.marca}}</td>
+      <td>{{a.precio_unitario}}</td>
+      <td>{{a.stock}}</td>
+      <td>{{a.disponible}}</td>
+      <td>
+        <a href="{% url 'EliminarArticulo' a.id %}"
+          ><div class="botonPeligro">Eliminar</div>
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<br />
+{% if miFormulario.errors %}
+
+<p style="color: red">Error en los datos ingresados</p>
+
+{% endif %}
+
+<form autocomplete="off" action="" method="POST">
+  {% csrf_token %} {{miFormulario.as_table}}
+
+  <input type="submit" value="Enviar" />
+</form>
+{% endblock %}
