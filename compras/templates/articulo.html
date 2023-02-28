@@ -1,0 +1,36 @@
+{% extends "app.html" %} {% load static %} {% block contenidoQueCambia %}
+<h1>Detalles del Articulo</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Categoria</th>
+      <th>Nombre</th>
+      <th>Marca</th>
+      <th>Precio Unitario</th>
+      <th>Stock</th>
+      <th>Disponible</th>
+      <th>Acción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{articulo.categoria}}</td>
+      <td>{{articulo.nombre}}</td>
+      <td>{{articulo.marca}}</td>
+      <td>{{articulo.precio_unitario}}</td>
+      <td>{{articulo.stock}}</td>
+      <td>{{articulo.disponible}}</td>
+      <td>
+        <div style="display: flex; justify-content: space-between; gap: 0.5rem">
+          <a href="{% url 'EditarArticulo' articulo.id %}" style="width: 100%"
+            ><div class="botonInfo">Editar</div>
+          </a>
+          <a href="{% url 'EliminarArticulo' articulo.id %}" style="width: 100%"
+            ><div class="botonPeligro">Eliminar</div>
+          </a>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+{% endblock %}

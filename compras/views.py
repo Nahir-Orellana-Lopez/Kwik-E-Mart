@@ -56,10 +56,47 @@ def articulos(request):
     documento = plantilla.render(contexto,request)
     return HttpResponse(documento)
 
+def editarArticulo(request, articulo_id):
+    miFormulario = ArticuloFormulario()
+    if request.method == 'POST':
+        miFormulario = ArticuloFormulario(request.POST)
+        
+        if miFormulario.is_valid():
+            informacion = miFormulario.cleaned_data
+            articulo = Articulo(id=articulo_id,
+                            nombre=informacion['nombre'],  
+                            categoria=informacion['categoria'],
+                            marca=informacion["marca"],
+                            precio_unitario=informacion['precio_unitario'],
+                            stock=informacion["stock"],
+                            disponible=informacion["disponible"])
+            articulo.save()
+            return HttpResponseRedirect("/compras/articulos/"+articulo_id)
+             
+    articulo = Articulo.objects.get(id=articulo_id)
+    miFormulario = ArticuloFormulario(initial={"nombre":articulo.nombre, 
+                                               "categoria": articulo.categoria, 
+                                               "marca": articulo.marca,
+                                               "precio_unitario": articulo.precio_unitario,
+                                               "stock": articulo.stock,
+                                               "disponible": articulo.disponible
+    })
+    contexto = {"articulo": articulo, "miFormulario": miFormulario}
+    plantilla = loader.get_template("editarArticulo.html")
+    documento = plantilla.render(contexto,request)
+    return HttpResponse(documento)
+
 def eliminarArticulo(request, articulo_id):
     articulo = Articulo.objects.get(id=articulo_id)
     articulo.delete()
     return HttpResponseRedirect('/compras/articulos')
+
+def verArticulo(request, articulo_id):
+    articulo = Articulo.objects.get(id=articulo_id)
+    contexto = {"articulo": articulo}
+    plantilla = loader.get_template("articulo.html")
+    documento = plantilla.render(contexto,request)
+    return HttpResponse(documento)
 
 def carrito(request, cliente_id):     
     carrito = ItemCarrito.objects.all().filter(cliente_id=cliente_id)

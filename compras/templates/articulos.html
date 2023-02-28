@@ -22,9 +22,14 @@
       <td>{{a.stock}}</td>
       <td>{{a.disponible}}</td>
       <td>
-        <a href="{% url 'EliminarArticulo' a.id %}"
-          ><div class="botonPeligro">Eliminar</div>
-        </a>
+        <div style="display: flex; justify-content: space-between; gap: 0.5rem">
+          <a href="{% url 'VerArticulo' a.id %}" style="width: 100%"
+            ><div class="botonInfo">Ver</div>
+          </a>
+          <a href="{% url 'EliminarArticulo' a.id %}" style="width: 100%"
+            ><div class="botonPeligro">Eliminar</div>
+          </a>
+        </div>
       </td>
     </tr>
     {% endfor %}

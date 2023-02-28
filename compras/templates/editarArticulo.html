@@ -1,0 +1,15 @@
+{% extends "app.html" %} {% load static %} {% block contenidoQueCambia %}
+<h2>Editar Artículo</h2>
+
+{% if miFormulario.errors %}
+
+<p style="color: red">Error en los datos ingresados</p>
+
+{% endif %}
+
+<form autocomplete="off" action="" method="POST">
+  {% csrf_token %} {{miFormulario.as_table}}
+
+  <input type="submit" value="Enviar" />
+</form>
+{% endblock %}
