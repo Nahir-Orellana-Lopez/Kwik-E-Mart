@@ -96,7 +96,11 @@ def buscarArticulos(request, cliente_id):
     return render(request, "buscar.html", {"cliente":cliente, "articulos":articulos,
                                            "categoria":categoria, "nombre":nombre, "marca":marca})
     
-
+def acercaDeMi(request):
+    plantilla = loader.get_template("acercaDeMi.html")
+    documento = plantilla.render({},request)
+    return HttpResponse(documento)
+   
 # miFormulario = ItemFormulario()
 # if request.method == 'POST':
 #     miFormulario = ItemFormulario(request.POST)
