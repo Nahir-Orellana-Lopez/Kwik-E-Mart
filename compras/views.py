@@ -6,7 +6,7 @@ from .models import Cliente, Articulo, ItemCarrito
 
 
 def inicio(request):
-    plantilla = loader.get_template("inicio.html")
+    plantilla = loader.get_template("compras/inicio.html")
     documento = plantilla.render({},request)
     return HttpResponse(documento)
 
@@ -25,7 +25,7 @@ def clientes(request):
              
     clientes = Cliente.objects.all()
     contexto = {"clientes": clientes, "miFormulario":miFormulario}
-    plantilla = loader.get_template("clientes.html")
+    plantilla = loader.get_template("compras/clientes.html")
     documento = plantilla.render(contexto,request)
     return HttpResponse(documento)
 
@@ -52,7 +52,7 @@ def articulos(request):
              
     articulos = Articulo.objects.all().order_by('categoria').values()
     contexto = {"articulos": articulos, "miFormulario": miFormulario}
-    plantilla = loader.get_template("articulos.html")
+    plantilla = loader.get_template("compras/articulos.html")
     documento = plantilla.render(contexto,request)
     return HttpResponse(documento)
 
@@ -82,7 +82,7 @@ def editarArticulo(request, articulo_id):
                                                "disponible": articulo.disponible
     })
     contexto = {"articulo": articulo, "miFormulario": miFormulario}
-    plantilla = loader.get_template("editarArticulo.html")
+    plantilla = loader.get_template("compras/editarArticulo.html")
     documento = plantilla.render(contexto,request)
     return HttpResponse(documento)
 
@@ -94,7 +94,7 @@ def eliminarArticulo(request, articulo_id):
 def verArticulo(request, articulo_id):
     articulo = Articulo.objects.get(id=articulo_id)
     contexto = {"articulo": articulo}
-    plantilla = loader.get_template("articulo.html")
+    plantilla = loader.get_template("compras/articulo.html")
     documento = plantilla.render(contexto,request)
     return HttpResponse(documento)
 
@@ -104,7 +104,7 @@ def carrito(request, cliente_id):
         i.suma_parcial = i.articulo.precio_unitario * i.cantidad
     cliente = Cliente.objects.get(pk=cliente_id)
     contexto = {"cliente": cliente,"carrito": carrito}
-    plantilla = loader.get_template("carrito.html")
+    plantilla = loader.get_template("compras/carrito.html")
     documento = plantilla.render(contexto,request)
     return HttpResponse(documento)
 
@@ -134,7 +134,7 @@ def buscarArticulos(request, cliente_id):
                                            "categoria":categoria, "nombre":nombre, "marca":marca})
     
 def acercaDeMi(request):
-    plantilla = loader.get_template("acercaDeMi.html")
+    plantilla = loader.get_template("compras/acercaDeMi.html")
     documento = plantilla.render({},request)
     return HttpResponse(documento)
    

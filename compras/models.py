@@ -17,7 +17,6 @@ class Articulo(models.Model):
         Categoria: {self.categoria}
         """+"\n")
     
-
 class Cliente(models.Model):
     nombre = models.CharField(max_length=200)
     email = models.EmailField(max_length=200, null=True)

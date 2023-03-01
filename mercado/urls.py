@@ -20,5 +20,6 @@ from django.shortcuts import redirect
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('compras/', include('compras.urls')),
+    path('accounts/', include('accounts.urls')),
     path('', lambda request: redirect('compras/', permanent=True))
 ]
