@@ -1,6 +1,13 @@
-{% extends "compras/app.html" %} {% load static %} <br />
+{% extends "compras/base.html" %} {% load static %} <br />
 {% block contenidoQueCambia %}
-<h1>Bienvenidos al Kwik-E-Mart Online</h1>
+<h1>
+  Bienvenida/o {% if request.user.is_authenticated %}
+  <b>{{request.user.username}}</b>
+  {% if avatar %}
+  <img width="32" src="{% static 'compras/assets/avatares/' %}{{ avatar }}" />
+  {% endif %} {% endif %} al Kwik-E-Mart Online
+</h1>
+
 <p>La mejor tienda del valle de Springfield</p>
 <footer
   style="

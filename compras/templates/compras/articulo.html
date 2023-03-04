@@ -1,10 +1,10 @@
-{% extends "compras/app.html" %} {% load static %} <br />
+{% extends "compras/base.html" %} {% load static %} <br />
 {% block contenidoQueCambia %}
 <h1>Detalles del Articulo</h1>
 <table>
   <thead>
     <tr>
-      <th>Categoria</th>
+      <th>Categorias</th>
       <th>Imagen</th>
       <th>Nombre</th>
       <th>Marca</th>
@@ -16,7 +16,7 @@
   </thead>
   <tbody>
     <tr>
-      <td>{{articulo.categoria}}</td>
+      <td>{{articulo.categorias}}</td>
       <td>
         {% if articulo.imagen %}
         <img width="100" src="{{ articulo.imagen.url }}" />

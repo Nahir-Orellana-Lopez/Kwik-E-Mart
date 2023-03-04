@@ -1,4 +1,4 @@
-{% extends "compras/app.html" %} {% load static %} <br />
+{% extends "compras/base.html" %} {% load static %} <br />
 {% block contenidoQueCambia %}
 <h1>Clientes</h1>
 <table>
@@ -39,14 +39,14 @@
   </tbody>
 </table>
 <h2>Agregar Cliente</h2>
-{% if miFormulario.errors %}
+{% if form.errors %}
 
 <p style="color: red">Error en los datos ingresados</p>
 
 {% endif %}
 
 <form autocomplete="off" action="" method="POST">
-  {% csrf_token %} {{miFormulario.as_table}}
+  {% csrf_token %} {{form.as_table}}
 
   <input type="submit" value="Enviar" />
 </form>

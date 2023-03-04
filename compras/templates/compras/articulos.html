@@ -1,10 +1,10 @@
-{% extends "compras/app.html" %} {% load static %} <br />
+{% extends "compras/base.html" %} {% load static %} <br />
 {% block contenidoQueCambia %}
 <h1>Articulos</h1>
 <table>
   <thead>
     <tr>
-      <th>Categoria</th>
+      <th>Categorias</th>
       <th>Imagen</th>
       <th>Nombre</th>
       <th>Marca</th>
@@ -17,7 +17,7 @@
   <tbody>
     {% for a in articulos %}
     <tr>
-      <td>{{a.categoria}}</td>
+      <td>{{a.categorias}}</td>
       <td>
         {% if a.imagen %}
         <img width="100" src="{{ a.imagen.url }}" />
@@ -46,19 +46,13 @@
 </table>
 {% if articulos|length == 0 %}
 <p>No hay artículos aún</p>
-{% endif %}
+{% endif %} {% if request.user.is_authenticated %}
 
 <h2>Agregar Artículo</h2>
 
-{% if miFormulario.errors %}
-
-<p style="color: red">Error en los datos ingresados</p>
-
-{% endif %}
-
 <form autocomplete="off" action="" method="POST" enctype="multipart/form-data">
-  {% csrf_token %} {{miFormulario.as_table}}
+  {% csrf_token %} {{form.as_p}}
 
   <input type="submit" value="Enviar" />
 </form>
-{% endblock %}
+{% endif %} {% endblock %}

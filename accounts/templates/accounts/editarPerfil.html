@@ -1,0 +1,13 @@
+{% extends "compras/base.html" %} {% load static %}<br />
+{% block contenidoQueCambia %}
+<h1>Editar Perfil</h1>
+<a href="{% url 'PasswordChange' %}"><button>Cambiar Contraseña</button></a>
+
+<form action="" method="POST">
+  {% csrf_token %}
+  <table>
+    {{ form.as_p }}
+  </table>
+  <input type="submit" , value="Enviar" />
+</form>
+{% endblock %}

@@ -1,15 +1,9 @@
-{% extends "compras/app.html" %} {% load static %} <br />
+{% extends "compras/base.html" %} {% load static %} <br />
 {% block contenidoQueCambia %}
 <h2>Editar Artículo</h2>
 
-{% if miFormulario.errors %}
-
-<p style="color: red">Error en los datos ingresados</p>
-
-{% endif %}
-
 <form autocomplete="off" action="" method="POST" enctype="multipart/form-data">
-  {% csrf_token %} {{miFormulario.as_table}}
+  {% csrf_token %} {{form.as_table}}
 
   <input type="submit" value="Enviar" />
 </form>
