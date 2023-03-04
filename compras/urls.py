@@ -1,5 +1,6 @@
 from django.urls import path
 from compras import views
+
 # app_name = 'compras'
 urlpatterns = [
     path('', views.inicio, name="Inicio"),
@@ -14,4 +15,4 @@ urlpatterns = [
     path('agregarItem/<articulo_id>/<cliente_id>', views.agregarItem, name="AgregarItem"),
     path('buscarArticulos/<cliente_id>/', views.buscarArticulos, name="BuscarArticulos"),
     path('acercaDeMi/', views.acercaDeMi, name="AcercaDeMi"),
-]
+] 

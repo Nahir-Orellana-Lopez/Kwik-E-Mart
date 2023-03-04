@@ -8,6 +8,8 @@ class Articulo(models.Model):
     precio_unitario = models.FloatField(default=0.0)
     stock = models.IntegerField(default=0)
     disponible = models.BooleanField(default=False)
+    fecha_subida = models.DateField(default=datetime.now())
+    imagen = models.ImageField(null=True, blank=True, upload_to="imagenes/articulos")
 
     def __str__(self):
         return(f"""

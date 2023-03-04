@@ -5,6 +5,7 @@
   <thead>
     <tr>
       <th>Categoria</th>
+      <th>Imagen</th>
       <th>Nombre</th>
       <th>Marca</th>
       <th>Precio Unitario</th>
@@ -17,6 +18,13 @@
     {% for a in articulos %}
     <tr>
       <td>{{a.categoria}}</td>
+      <td>
+        {% if a.imagen %}
+        <img width="100" src="{{ a.imagen.url }}" />
+        {% else %}
+        <img width="100" src="{% static 'compras/assets/img/no-image.png' %}" />
+        {% endif %}
+      </td>
       <td>{{a.nombre}}</td>
       <td>{{a.marca}}</td>
       <td>{{a.precio_unitario}}</td>
@@ -36,6 +44,10 @@
     {% endfor %}
   </tbody>
 </table>
+{% if articulos|length == 0 %}
+<p>No hay artículos aún</p>
+{% endif %}
+
 <h2>Agregar Artículo</h2>
 
 {% if miFormulario.errors %}
@@ -44,7 +56,7 @@
 
 {% endif %}
 
-<form autocomplete="off" action="" method="POST">
+<form autocomplete="off" action="" method="POST" enctype="multipart/form-data">
   {% csrf_token %} {{miFormulario.as_table}}
 
   <input type="submit" value="Enviar" />

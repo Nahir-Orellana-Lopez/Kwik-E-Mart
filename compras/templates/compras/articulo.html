@@ -5,6 +5,7 @@
   <thead>
     <tr>
       <th>Categoria</th>
+      <th>Imagen</th>
       <th>Nombre</th>
       <th>Marca</th>
       <th>Precio Unitario</th>
@@ -16,6 +17,13 @@
   <tbody>
     <tr>
       <td>{{articulo.categoria}}</td>
+      <td>
+        {% if articulo.imagen %}
+        <img width="100" src="{{ articulo.imagen.url }}" />
+        {% else %}
+        <img width="100" src="{% static 'compras/assets/img/no-image.png' %}" />
+        {% endif %}
+      </td>
       <td>{{articulo.nombre}}</td>
       <td>{{articulo.marca}}</td>
       <td>{{articulo.precio_unitario}}</td>

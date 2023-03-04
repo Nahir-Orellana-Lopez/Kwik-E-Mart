@@ -37,7 +37,7 @@ def eliminarCliente(request, cliente_id):
 def articulos(request):
     miFormulario = ArticuloFormulario()
     if request.method == 'POST':
-        miFormulario = ArticuloFormulario(request.POST)
+        miFormulario = ArticuloFormulario(request.POST, request.FILES)
         
         if miFormulario.is_valid():
             informacion = miFormulario.cleaned_data
@@ -46,11 +46,13 @@ def articulos(request):
                             marca=informacion["marca"],
                             precio_unitario=informacion['precio_unitario'],
                             stock=informacion["stock"],
-                            disponible=informacion["disponible"])
+                            disponible=informacion["disponible"],
+                            imagen=informacion["imagen"])
             articulo.save()
             return HttpResponseRedirect("/compras/articulos")
              
-    articulos = Articulo.objects.all().order_by('categoria').values()
+    articulos = Articulo.objects.all().order_by('categoria')
+    # articulos = []
     contexto = {"articulos": articulos, "miFormulario": miFormulario}
     plantilla = loader.get_template("compras/articulos.html")
     documento = plantilla.render(contexto,request)
@@ -59,7 +61,7 @@ def articulos(request):
 def editarArticulo(request, articulo_id):
     miFormulario = ArticuloFormulario()
     if request.method == 'POST':
-        miFormulario = ArticuloFormulario(request.POST)
+        miFormulario = ArticuloFormulario(request.POST, request.FILES)
         
         if miFormulario.is_valid():
             informacion = miFormulario.cleaned_data
@@ -69,8 +71,15 @@ def editarArticulo(request, articulo_id):
                             marca=informacion["marca"],
                             precio_unitario=informacion['precio_unitario'],
                             stock=informacion["stock"],
-                            disponible=informacion["disponible"])
-            articulo.save()
+                            disponible=informacion["disponible"],
+                            imagen=informacion["imagen"])
+            
+            fields_to_exclude = {}
+            if(articulo.imagen == None):
+                fields_to_exclude = {'imagen'}
+            fields_to_update = [f.name for f in articulo._meta.get_fields() if f.name not in fields_to_exclude and not f.auto_created]
+            articulo.save(update_fields=fields_to_update)
+            # articulo.save()
             return HttpResponseRedirect("/compras/articulos/"+articulo_id)
              
     articulo = Articulo.objects.get(id=articulo_id)
@@ -79,7 +88,8 @@ def editarArticulo(request, articulo_id):
                                                "marca": articulo.marca,
                                                "precio_unitario": articulo.precio_unitario,
                                                "stock": articulo.stock,
-                                               "disponible": articulo.disponible
+                                               "disponible": articulo.disponible,
+                                               "imagen": articulo.imagen
     })
     contexto = {"articulo": articulo, "miFormulario": miFormulario}
     plantilla = loader.get_template("compras/editarArticulo.html")
@@ -130,7 +140,7 @@ def buscarArticulos(request, cliente_id):
     articulos = Articulo.objects.filter(categoria__icontains=categoria,
                                         nombre__icontains=nombre,
                                         marca__icontains=marca)
-    return render(request, "buscar.html", {"cliente":cliente, "articulos":articulos,
+    return render(request, "compras/buscar.html", {"cliente":cliente, "articulos":articulos,
                                            "categoria":categoria, "nombre":nombre, "marca":marca})
     
 def acercaDeMi(request):
