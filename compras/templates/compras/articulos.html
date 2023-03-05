@@ -72,7 +72,6 @@
     <p>No hay artículos aún</p>
   {% endif %}
   {% if request.user.is_authenticated and request.user.is_staff %}
-
     <a href="{% url 'AgregarArticulo' %}">
       <button class="botonSeguro">Agregar Artículo</button>
     </a>

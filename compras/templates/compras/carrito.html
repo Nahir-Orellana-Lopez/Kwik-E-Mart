@@ -40,4 +40,7 @@
       {% endfor %}
     </tbody>
   </table>
+  {% if carrito|length == 0 %}
+    <p>No hay items aún</p>
+  {% endif %}
 {% endblock %}
