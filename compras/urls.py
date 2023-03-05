@@ -4,15 +4,13 @@ from compras import views
 # app_name = 'compras'
 urlpatterns = [
     path('', views.inicio, name="Inicio"),
-    # path('clientes/', views.clientes, name="Clientes"),
-    # path('eliminarCliente/<cliente_id>', views.eliminarCliente, name="EliminarCliente"),
     path('articulos/', views.articulos, name="Articulos"),
     path('articulos/<articulo_id>', views.verArticulo, name="VerArticulo"),
+    path('articulos/agregar/', views.agregarArticulo, name="AgregarArticulo"),
     path('articulos/editar/<articulo_id>', views.editarArticulo, name="EditarArticulo"),
-    path('eliminarArticulo/<articulo_id>', views.eliminarArticulo, name="EliminarArticulo"),
-    path('carrito/<cliente_id>', views.carrito, name="Carrito"),
-    path('eliminarItem/<item_id>/<cliente_id>', views.eliminarItem, name="EliminarItem"),
-    path('agregarItem/<articulo_id>/<cliente_id>', views.agregarItem, name="AgregarItem"),
-    # path('buscarArticulos/<cliente_id>/', views.buscarArticulos, name="BuscarArticulos"),
+    path('articulos/eliminar/<articulo_id>', views.eliminarArticulo, name="EliminarArticulo"),
+    path('carrito/', views.carrito, name="Carrito"),
+    path('carrito/eliminar/<item_id>', views.eliminarItem, name="EliminarItem"),
+    path('carrito/agregar/<articulo_id>', views.agregarItem, name="AgregarItem"),
     path('acercaDeMi/', views.acercaDeMi, name="AcercaDeMi"),
 ] 

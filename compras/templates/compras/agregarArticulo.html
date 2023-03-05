@@ -2,11 +2,11 @@
 {% load static %}
 <br/>
 {% block contenidoQueCambia %}
-  <h2>Editar Artículo</h2>
+  <h2>Agregar Artículo</h2>
 
   <form autocomplete="off" action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    {{form.as_table}}
+    {{form.as_p}}
 
     <input type="submit" value="Enviar"/>
   </form>

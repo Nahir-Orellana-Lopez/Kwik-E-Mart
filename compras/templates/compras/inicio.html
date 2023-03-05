@@ -1,23 +1,27 @@
-{% extends "compras/base.html" %} {% load static %} <br />
+{% extends "compras/base.html" %}
+{% load static %}
+<br/>
 {% block contenidoQueCambia %}
-<h1>
-  Bienvenida/o {% if request.user.is_authenticated %}
-  <b>{{request.user.username}}</b>
-  {% if avatar %}
-  <img width="32" src="{% static 'compras/assets/avatares/' %}{{ avatar }}" />
-  {% endif %} {% endif %} al Kwik-E-Mart Online
-</h1>
+  <h1>
+    Bienvenida/o
+    {% if request.user.is_authenticated %}
+      <b>{{request.user.first_name}}</b>
+      {% if avatar %}
+        <img width="32" src="{% static 'compras/assets/avatares/' %}{{ avatar }}"/>
+      {% endif %}
+    {% endif %}
+    al Kwik-E-Mart Online
+  </h1>
 
-<p>La mejor tienda del valle de Springfield</p>
-<footer
-  style="
+  <p>La mejor tienda del valle de Springfield</p>
+  <img style="width: 75vw" src="{% static 'compras/assets/img/kwik-e-mart-bg.jpg'%}"/>
+  <footer style="
     right: 0px;
     font-weight: bold;
     padding: 1rem;
     position: fixed;
     bottom: 0px;
-  "
->
-  Gracias por venir, vuelvan prontos!
-</footer>
+  ">
+    Gracias por venir, vuelvan prontos!
+  </footer>
 {% endblock %}

@@ -31,7 +31,7 @@ class ItemCarrito(models.Model):
         Cantidad: {self.cantidad}
         Suma parcial : $ {self.articulo.precio_unitario*self.cantidad}
         """+"\n")
-    
+        
     def agregar(self):
         self.cantidad+=1
         

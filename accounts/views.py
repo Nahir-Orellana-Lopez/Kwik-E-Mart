@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse, HttpResponseRedirect
-from .forms import UserRegisterForm, UserEditForm, PasswordEditForm
-from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import login, logout, authenticate
-from django.urls import reverse
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.urls import reverse
+from .forms import UserRegisterForm, UserEditForm
 from accounts.models import Avatar
 
 @login_required
@@ -53,14 +55,16 @@ def editarPerfil(request):
         form = UserEditForm(request.POST, instance=request.user)
         if form.is_valid():
             informacion = form.cleaned_data
-            avatares = Avatar.objects.filter(user=usuario.id)
-            if(len(avatares) >= 1):
-                avatar = avatares[0]
-                avatar.imagen = informacion["avatar_img"]
-                avatar.save()
-            else:
-                avatar = Avatar(user=usuario, imagen=informacion["avatar_img"])
-                avatar.save()
+            nuevo_avatar = informacion["avatar_img"]
+            if(nuevo_avatar):
+                avatares = Avatar.objects.filter(user=usuario.id)
+                if(len(avatares) >= 1):
+                    avatar = avatares[0]
+                    avatar.imagen = informacion["avatar_img"]
+                    avatar.save()
+                else:
+                    avatar = Avatar(user=usuario, imagen=informacion["avatar_img"])
+                    avatar.save()
             form.save()
             url = reverse('Inicio')
             return HttpResponseRedirect(url)
@@ -92,3 +96,17 @@ def editarPassword(request):
     else:
         form = PasswordChangeForm(usuario)
     return render(request, "accounts/editarPassword.html", {"form": form, "usuario": usuario})
+
+@login_required
+@staff_member_required
+def clientes(request):  
+    clientes = User.objects.filter(is_staff=False)
+    for c in clientes:
+        avatares = Avatar.objects.filter(user=c.id)
+        if(len(avatares) >= 1):
+            avatar = avatares[0]           
+            c.imagen = avatar.imagen.name
+    contexto = {"clientes": clientes}
+    plantilla = loader.get_template("accounts/clientes.html")
+    documento = plantilla.render(contexto,request)
+    return HttpResponse(documento)

@@ -1,0 +1,29 @@
+{% extends "compras/base.html" %}
+{% load static %}
+<br/>
+{% block contenidoQueCambia %}
+  <h1>Clientes</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Avatar</th>
+        <th>Usuario</th>
+        <th>Nombre</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in clientes %}
+        <tr>
+          <td><img width="32" src="{% static 'compras/assets/avatares/' %}{{ c.imagen }}" /></td>
+          <td>{{c.username}}</td>
+          <td>{{c.first_name}} {{c.last_name}}</td>
+          <td>{{c.email}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% if clientes|length == 0 %}
+    <p>No hay clientes aún</p>
+  {% endif %}
+{% endblock %}

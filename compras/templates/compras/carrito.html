@@ -1,37 +1,43 @@
-{% extends "compras/base.html" %} {% load static %} <br />
+{% extends "compras/base.html" %}
+{% load static %}
+<br/>
 {% block contenidoQueCambia %}
-<h1>Carrito de {{cliente.nombre}}</h1>
-<table>
-  <thead>
-    <tr>
-      <th>Nombre</th>
-      <th>Precio Unitario</th>
-      <th>Cantidad</th>
-      <th>Suma Parcial</th>
-      <th>Acción</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for i in carrito %}
-    <tr>
-      <td>{{i.articulo.marca}}{{" "}}{{i.articulo.nombre}}</td>
-      <td>{{i.articulo.precio_unitario}}</td>
-      <td>{{i.cantidad}}</td>
-      <td>{{i.suma_parcial}}</td>
-      <td>
-        <a href="{% url 'EliminarItem' i.id cliente.id %}"
-          ><div class="botonPeligro">Eliminar</div></a
-        >
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-<br />
-
-<div style="display: inline-block">
-  <a href="{% url 'BuscarArticulos' cliente.id %}"
-    ><div class="botonSeguro botonGrande">Seguir comprando</div></a
-  >
-</div>
+  <h1>Carrito de
+    {{request.user.first_name}}</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Imagen</th>
+        <th>Marca</th>
+        <th>Nombre</th>
+        <th>Precio Unitario</th>
+        <th>Cantidad</th>
+        <th>Suma Parcial</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in carrito %}
+        <tr>
+          <td>
+            {% if i.articulo.imagen %}
+              <img width="100" src="{{ i.articulo.imagen.url }}"/>
+            {% else %}
+              <img width="100" src="{% static 'compras/assets/img/no-image.png' %}"/>
+            {% endif %}
+          </td>
+          <td>{{i.articulo.marca}}</td>
+          <td>{{i.articulo.nombre}}</td>
+          <td>{{i.articulo.precio_unitario}}</td>
+          <td>{{i.cantidad}}</td>
+          <td>{{i.suma_parcial}}</td>
+          <td>
+            <a href="{% url 'EliminarItem' i.id %}">
+              <div class="botonPeligro">Eliminar</div>
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endblock %}

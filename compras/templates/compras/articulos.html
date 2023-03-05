@@ -1,58 +1,80 @@
-{% extends "compras/base.html" %} {% load static %} <br />
+{% extends "compras/base.html" %}
+{% load static %}
+<br/>
 {% block contenidoQueCambia %}
-<h1>Articulos</h1>
-<table>
-  <thead>
-    <tr>
-      <th>Categorias</th>
-      <th>Imagen</th>
-      <th>Nombre</th>
-      <th>Marca</th>
-      <th>Precio Unitario</th>
-      <th>Stock</th>
-      <th>Disponible</th>
-      <th>Acción</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for a in articulos %}
-    <tr>
-      <td>{{a.categorias}}</td>
-      <td>
-        {% if a.imagen %}
-        <img width="100" src="{{ a.imagen.url }}" />
-        {% else %}
-        <img width="100" src="{% static 'compras/assets/img/no-image.png' %}" />
-        {% endif %}
-      </td>
-      <td>{{a.nombre}}</td>
-      <td>{{a.marca}}</td>
-      <td>{{a.precio_unitario}}</td>
-      <td>{{a.stock}}</td>
-      <td>{{a.disponible}}</td>
-      <td>
-        <div style="display: flex; justify-content: space-between; gap: 0.5rem">
-          <a href="{% url 'VerArticulo' a.id %}" style="width: 100%"
-            ><div class="botonInfo">Ver</div>
-          </a>
-          <a href="{% url 'EliminarArticulo' a.id %}" style="width: 100%"
-            ><div class="botonPeligro">Eliminar</div>
-          </a>
-        </div>
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-{% if articulos|length == 0 %}
-<p>No hay artículos aún</p>
-{% endif %} {% if request.user.is_authenticated %}
+  <h1>Artículos</h1>
 
-<h2>Agregar Artículo</h2>
+  <h2>Buscar Artículos</h2>
 
-<form autocomplete="off" action="" method="POST" enctype="multipart/form-data">
-  {% csrf_token %} {{form.as_p}}
+  <form action="/compras/articulos" method="GET">
+    <label for="Categorias">Categorias</label>
+    <input type="text" name="categorias" id="categorias" value="{{categorias}}"/>
+    <label for="nombre">Nombre</label>
+    <input type="text" name="nombre" id="nombre" value="{{nombre}}"/>
+    <label for="marca">Marca</label>
+    <input type="text" name="marca" id="marca" value="{{marca}}"/>
+    <input type="submit" value="Buscar"/>
+  </form>
+  <br/>
+  <table>
+    <thead>
+      <tr>
+        <th>Categorias</th>
+        <th>Imagen</th>
+        <th>Nombre</th>
+        <th>Marca</th>
+        <th>Precio Unitario</th>
+        <th>Stock</th>
+        <th>Disponible</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for a in articulos %}
+        <tr>
+          <td>{{a.categorias}}</td>
+          <td>
+            {% if a.imagen %}
+              <img width="100" src="{{ a.imagen.url }}"/>
+            {% else %}
+              <img width="100" src="{% static 'compras/assets/img/no-image.png' %}"/>
+            {% endif %}
+          </td>
+          <td>{{a.nombre}}</td>
+          <td>{{a.marca}}</td>
+          <td>{{a.precio_unitario}}</td>
+          <td>{{a.stock}}</td>
+          <td>{{a.disponible}}</td>
+          <td>
+            <div style="display: flex; justify-content: space-between; gap: 0.5rem">
+              <a href="{% url 'VerArticulo' a.id %}" style="width: 100%">
+                <div class="botonInfo">Ver</div>
+              </a>
+              {% if request.user.is_authenticated and request.user.is_staff %}
+                <a href="{% url 'EliminarArticulo' a.id %}" style="width: 100%">
+                  <div class="botonPeligro">Eliminar</div>
+                </a>
+              {% endif %}
+              {% if request.user.is_authenticated and not request.user.is_staff and a.disponible %}
+                <form action="/compras/carrito/agregar/{{a.id}}" method="POST">
+                  {% csrf_token %}
+                  <input type="number" name="cantidad" id="cantidad" value="1" min="1" max="{{a.stock}}"/>
+                  <input class="botonSeguro" type="submit" value="Agregar"/>
+                </form>
+              {% endif %}
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% if articulos|length == 0 %}
+    <p>No hay artículos aún</p>
+  {% endif %}
+  {% if request.user.is_authenticated and request.user.is_staff %}
 
-  <input type="submit" value="Enviar" />
-</form>
-{% endif %} {% endblock %}
+    <a href="{% url 'AgregarArticulo' %}">
+      <button class="botonSeguro">Agregar Artículo</button>
+    </a>
+  {% endif %}
+{% endblock %}
