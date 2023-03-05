@@ -1,13 +1,21 @@
-{% extends "compras/base.html" %} {% load static %}<br />
+{% extends "compras/base.html" %}
+{% load static %}<br/>
 {% block contenidoQueCambia %}
-<h1>Editar Perfil</h1>
-<a href="{% url 'PasswordChange' %}"><button>Cambiar Contraseña</button></a>
 
-<form action="" method="POST">
-  {% csrf_token %}
-  <table>
-    {{ form.as_p }}
-  </table>
-  <input type="submit" , value="Enviar" />
-</form>
+  <div class="d-flex">
+    <h4>Editar Perfil</h4>
+    <a class=" ms-2" href="{% url 'PasswordChange' %}">
+      <button type="submit" class="btn btn-danger btn-sm">Cambiar Contraseña</button>
+    </a>
+  </div>
+
+  <div class="card" style="width: 24rem;">
+    <div class="card-body">
+      <form action="" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Guardar</button>
+      </form>
+    </div>
+  </div>
 {% endblock %}

@@ -2,21 +2,27 @@
 {% load static %}
 <br/>
 {% block contenidoQueCambia %}
-  <h1>Artículos</h1>
+  <h4>Buscar Artículos</h4>
 
-  <h2>Buscar Artículos</h2>
-
-  <form action="/compras/articulos" method="GET">
-    <label for="Categorias">Categorias</label>
-    <input type="text" name="categorias" id="categorias" value="{{categorias}}"/>
-    <label for="nombre">Nombre</label>
-    <input type="text" name="nombre" id="nombre" value="{{nombre}}"/>
-    <label for="marca">Marca</label>
-    <input type="text" name="marca" id="marca" value="{{marca}}"/>
-    <input type="submit" value="Buscar"/>
+  <form class="row mb-3" action="/compras/articulos" method="GET">
+    <div class="col-auto align-self-end">
+      <label for="categorias" class="form-label">Categorias</label>
+      <input type="text" class="form-control form-control-sm"  name="categorias" id="categorias" value="{{categorias}}">
+    </div>
+    <div class="col-auto align-self-end">
+      <label for="nombre" class="form-label">Nombre</label>
+      <input type="text" class="form-control form-control-sm"  name="nombre" id="nombre" value="{{nombre}}">
+    </div>
+    <div class="col-auto align-self-end">
+      <label for="marca" class="form-label">Marca</label>
+      <input type="text" class="form-control form-control-sm" name="marca" id="marca" value="{{marca}}">
+    </div>
+    <div class="col-auto align-self-end">
+      <button type="submit" class="btn btn-primary btn-sm">Buscar</button>
+    </div>
   </form>
   <br/>
-  <table>
+  <table class="table">
     <thead>
       <tr>
         <th>Categorias</th>
@@ -25,7 +31,10 @@
         <th>Marca</th>
         <th>Precio Unitario</th>
         <th>Stock</th>
+        {% if request.user.is_authenticated and request.user.is_staff %}
         <th>Disponible</th>
+        {% endif %}
+        <th>Detalles</th>
         <th>Acción</th>
       </tr>
     </thead>
@@ -42,25 +51,38 @@
           </td>
           <td>{{a.nombre}}</td>
           <td>{{a.marca}}</td>
-          <td>{{a.precio_unitario}}</td>
+          <td>${{a.precio_unitario}}</td>
           <td>{{a.stock}}</td>
+          {% if request.user.is_authenticated and request.user.is_staff %}
           <td>{{a.disponible}}</td>
+          {% endif %}
+          <td><a href="{% url 'VerArticulo' a.id %}">
+            <button type="button" class="btn btn-primary btn-sm w-100">Ver</button>
+          </a></td>
           <td>
-            <div style="display: flex; justify-content: space-between; gap: 0.5rem">
-              <a href="{% url 'VerArticulo' a.id %}" style="width: 100%">
-                <div class="botonInfo">Ver</div>
-              </a>
+            <div class="row">
+              </div>
               {% if request.user.is_authenticated and request.user.is_staff %}
-                <a href="{% url 'EliminarArticulo' a.id %}" style="width: 100%">
-                  <div class="botonPeligro">Eliminar</div>
+                <a href="{% url 'EliminarArticulo' a.id %}">
+                  <button type="button" class="btn btn-danger btn-sm w-100">Eliminar</button>
                 </a>
               {% endif %}
-              {% if request.user.is_authenticated and not request.user.is_staff and a.disponible %}
-                <form action="/compras/carrito/agregar/{{a.id}}" method="POST">
-                  {% csrf_token %}
-                  <input type="number" name="cantidad" id="cantidad" value="1" min="1" max="{{a.stock}}"/>
-                  <input class="botonSeguro" type="submit" value="Agregar"/>
-                </form>
+              
+              {% if request.user.is_authenticated and not request.user.is_staff %}
+              <div class="col-auto align-self-end">
+
+              <form class="row" action="/compras/carrito/agregar/{{a.id}}" method="POST">
+                {% csrf_token %}
+                
+                <div class="col-6 align-self-end ">
+                  <input type="number" class="form-control form-control-sm" name="cantidad" id="cantidad" value="1" min="1" max="{{a.stock}}">
+                </div>
+                <div class="col-6 align-self-end">
+                  <input class="btn btn-success btn-sm w-100" type="submit" value="Agregar">
+                </div>
+              </form>
+            </div>
+
               {% endif %}
             </div>
           </td>
@@ -73,7 +95,7 @@
   {% endif %}
   {% if request.user.is_authenticated and request.user.is_staff %}
     <a href="{% url 'AgregarArticulo' %}">
-      <button class="botonSeguro">Agregar Artículo</button>
+      <button type="button" class="btn btn-success">Agregar</button>
     </a>
   {% endif %}
 {% endblock %}

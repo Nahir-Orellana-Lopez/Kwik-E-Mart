@@ -2,7 +2,7 @@
 {% load static %}
 <br/>
 {% block contenidoQueCambia %}
-  <h1>
+  <h2>
     Bienvenida/o
     {% if request.user.is_authenticated %}
       <b>{{request.user.first_name}}</b>
@@ -11,9 +11,9 @@
       {% endif %}
     {% endif %}
     al Kwik-E-Mart Online
-  </h1>
+  </h2>
 
-  <p>La mejor tienda del valle de Springfield</p>
+  <p><i>La mejor tienda del valle de Springfield</i></p>
   <img style="width: 75vw" src="{% static 'compras/assets/img/kwik-e-mart-bg.jpg'%}"/>
   <footer style="
     right: 0px;

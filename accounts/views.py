@@ -2,23 +2,23 @@ from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.urls import reverse
-from .forms import UserRegisterForm, UserEditForm
+from .forms import UserRegisterForm, UserEditForm, LoginForm, ChangePasswordForm
 from accounts.models import Avatar
 
 @login_required
 def logout_req(request):
     logout(request)
-    url = reverse('Inicio')
+    url = reverse('Login')
     return HttpResponseRedirect(url)
 
 def login_req(request):
     if request.method == 'POST':
-        form = AuthenticationForm(request, data = request.POST)
+        form = LoginForm(request, data = request.POST)
         if form.is_valid():
             usuario = form.cleaned_data.get('username')
             contraseña = form.cleaned_data.get('password')
@@ -32,7 +32,7 @@ def login_req(request):
         else:
             return render(request, "accounts/login.html", {"form": form, "error":"Los datos son incorrectos"})
     else:
-        form = AuthenticationForm()
+        form = LoginForm()
     return render(request, "accounts/login.html", {"form": form})
 
 def signup(request):
@@ -85,7 +85,7 @@ def editarPerfil(request):
 def editarPassword(request):
     usuario = request.user
     if request.method == 'POST':
-        form = PasswordChangeForm(usuario, data=request.POST)
+        form = ChangePasswordForm(usuario, data=request.POST)
         if form.is_valid():
             form.save()
             logout(request)
@@ -94,7 +94,7 @@ def editarPassword(request):
         else:
             return render(request, "accounts/editarPassword.html", {"form": form, "error":"Los datos son incorrectos"})
     else:
-        form = PasswordChangeForm(usuario)
+        form = ChangePasswordForm(usuario)
     return render(request, "accounts/editarPassword.html", {"form": form, "usuario": usuario})
 
 @login_required

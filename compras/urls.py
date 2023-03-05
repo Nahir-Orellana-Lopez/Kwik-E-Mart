@@ -12,5 +12,6 @@ urlpatterns = [
     path('carrito/', views.carrito, name="Carrito"),
     path('carrito/eliminar/<item_id>', views.eliminarItem, name="EliminarItem"),
     path('carrito/agregar/<articulo_id>', views.agregarItem, name="AgregarItem"),
+    path('carrito/set/<item_id>', views.setItem, name="SetItem"),
     path('acercaDeMi/', views.acercaDeMi, name="AcercaDeMi"),
 ] 

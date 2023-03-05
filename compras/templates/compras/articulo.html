@@ -2,8 +2,8 @@
 {% load static %}
 <br/>
 {% block contenidoQueCambia %}
-  <h1>Detalles del Articulo</h1>
-  <table>
+  <h4>Detalles del Articulo</h4>
+  <table class="table">
     <thead>
       <tr>
         <th>Categorias</th>
@@ -12,7 +12,10 @@
         <th>Marca</th>
         <th>Precio Unitario</th>
         <th>Stock</th>
+        {% if request.user.is_authenticated and request.user.is_staff %}
+        <th>Fecha Subida</th>
         <th>Disponible</th>
+        {% endif %}
         <th>Acción</th>
       </tr>
     </thead>
@@ -28,25 +31,36 @@
         </td>
         <td>{{articulo.nombre}}</td>
         <td>{{articulo.marca}}</td>
-        <td>{{articulo.precio_unitario}}</td>
+        <td>${{articulo.precio_unitario}}</td>
         <td>{{articulo.stock}}</td>
+        {% if request.user.is_authenticated and request.user.is_staff %}
+        <td>{{articulo.fecha_subida}}</td>
         <td>{{articulo.disponible}}</td>
+        {% endif %}
         <td>
           <div style="display: flex; justify-content: space-between; gap: 0.5rem">
             {% if request.user.is_authenticated and request.user.is_staff %}
               <a href="{% url 'EditarArticulo' articulo.id %}" style="width: 100%">
-                <div class="botonInfo">Editar</div>
+                <button type="button" class="btn btn-primary btn-sm w-100">Editar</button>
               </a>
               <a href="{% url 'EliminarArticulo' articulo.id %}" style="width: 100%">
-                <div class="botonPeligro">Eliminar</div>
+                <button type="button" class="btn btn-danger btn-sm w-100">Eliminar</button>
               </a>
             {% endif %}
-            {% if request.user.is_authenticated and not request.user.is_staff and articulo.disponible %}
-              <form action="/compras/carrito/agregar/{{a.id}}" method="POST">
+            {% if request.user.is_authenticated and not request.user.is_staff %}
+            <div class="col-auto align-self-end">
+
+              <form class="row" action="/compras/carrito/agregar/{{articulo.id}}" method="POST">
                 {% csrf_token %}
-                <input type="number" name="cantidad" id="cantidad" value="1" min="1" max="{{a.stock}}"/>
-                <input class="botonSeguro" type="submit" value="Agregar"/>
+                
+                <div class="col-6 align-self-end ">
+                  <input type="number" class="form-control form-control-sm" name="cantidad" id="cantidad" value="1" min="1" max="{{a.stock}}">
+                </div>
+                <div class="col-6 align-self-end">
+                  <input class="btn btn-success btn-sm w-100" type="submit" value="Agregar">
+                </div>
               </form>
+            </div>
             {% endif %}
           </div>
         </td>

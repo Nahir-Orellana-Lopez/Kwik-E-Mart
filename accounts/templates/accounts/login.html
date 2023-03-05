@@ -1,9 +1,13 @@
 {% extends "compras/base.html" %} {% load static %}<br />
 {% block contenidoQueCambia %}
-<h1>Login</h1>
+<h4>Login</h4>
 
-<form action="" method="POST">
-  {% csrf_token %} {{ form.as_p }}
-  <button type="submit">Inciar sesion</button>
-</form>
+<div class="card" style="width: 24rem;">
+  <div class="card-body">
+    <form action="" method="POST">
+      {% csrf_token %} {{ form.as_p }}
+      <button type="submit" class="btn btn-success">Inciar sesion</button>
+    </form>
+  </div>
+</div>
 {% endblock %}

@@ -2,10 +2,10 @@
 {% load static %}
 <br/>
 {% block contenidoQueCambia %}
-  <h1>Carrito de
-    {{request.user.first_name}}</h1>
-  <table>
-    <thead>
+  <h4>Carrito de
+    {{request.user.first_name}}</h4>
+    <table class="table">
+      <thead>
       <tr>
         <th>Imagen</th>
         <th>Marca</th>
@@ -28,12 +28,22 @@
           </td>
           <td>{{i.articulo.marca}}</td>
           <td>{{i.articulo.nombre}}</td>
-          <td>{{i.articulo.precio_unitario}}</td>
-          <td>{{i.cantidad}}</td>
-          <td>{{i.suma_parcial}}</td>
+          <td>${{i.articulo.precio_unitario}}</td>
+          <td>
+            <form class="row" action="/compras/carrito/set/{{i.id}}" method="POST">
+              {% csrf_token %}
+              <div class="col-8 align-self-end">
+                <input onChange="form.submit()" type="number" class="form-control form-control-sm" name="cantidad" id="cantidad" value="{{i.cantidad}}" min="1" max="{{i.articulo.stock}}">
+              </div>
+              <div class="col-4 align-self-end">
+                /{{i.articulo.stock}}
+              </div>
+            </form>
+          </td>
+          <td>${{i.suma_parcial}}</td>
           <td>
             <a href="{% url 'EliminarItem' i.id %}">
-              <div class="botonPeligro">Eliminar</div>
+              <button type="button" class="btn btn-danger btn-sm w-100">Eliminar</button>
             </a>
           </td>
         </tr>

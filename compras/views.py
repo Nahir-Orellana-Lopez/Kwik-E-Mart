@@ -25,6 +25,8 @@ def articulos(request):
     articulos = Articulo.objects.filter(categorias__icontains=categorias,
                                         nombre__icontains=nombre,
                                         marca__icontains=marca).order_by('nombre')
+    if(not request.user.is_staff):
+        articulos = articulos.filter(disponible=True)
     contexto = {"articulos": articulos,"categoria":categorias, "nombre":nombre, "marca":marca}
     plantilla = loader.get_template("compras/articulos.html")
     documento = plantilla.render(contexto,request)
@@ -128,9 +130,29 @@ def agregarItem(request, articulo_id):
     cliente = request.user
     cantidad = request.POST.get('cantidad', 0)
     if(int(cantidad)>0):
-        item = ItemCarrito(cantidad=cantidad,
-                            articulo=Articulo(id=articulo_id),
-                            cliente=cliente)
+        items = ItemCarrito.objects.filter(articulo=articulo_id, cliente=cliente.id)
+        if(len(items)==0):        
+            item = ItemCarrito(cantidad=cantidad,
+                                articulo=Articulo(id=articulo_id),
+                                cliente=cliente)
+        else:
+            item = items[0]
+            if(item.cantidad+int(cantidad)<=item.articulo.stock):
+                item.cantidad+=int(cantidad)
+            else:
+                item.cantidad = item.articulo.stock
+        item.save()
+    return HttpResponseRedirect('/compras/carrito/')
+
+@login_required
+def setItem(request, item_id):
+    cantidad = request.POST.get('cantidad', 0)
+    if(int(cantidad)>0):
+        item = ItemCarrito.objects.get(id=item_id)
+        if(int(cantidad)<=item.articulo.stock):
+            item.cantidad = int(cantidad)
+        else:
+            item.cantidad = item.articulo.stock
         item.save()
     return HttpResponseRedirect('/compras/carrito/')
 

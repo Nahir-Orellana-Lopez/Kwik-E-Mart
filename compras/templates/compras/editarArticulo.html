@@ -2,12 +2,15 @@
 {% load static %}
 <br/>
 {% block contenidoQueCambia %}
-  <h2>Editar Artículo</h2>
+  <h4>Editar Artículo</h4>
 
-  <form autocomplete="off" action="" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{form.as_table}}
-
-    <input type="submit" value="Enviar"/>
-  </form>
+  <div class="card" style="width: 24rem;">
+    <div class="card-body">
+      <form autocomplete="off" action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="btn btn-success">Guardar</button>
+      </form>
+    </div>
+  </div>
 {% endblock %}
