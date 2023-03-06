@@ -70,10 +70,9 @@ def editarPerfil(request):
             return HttpResponseRedirect(url)
     else:
         avatares = Avatar.objects.filter(user=usuario.id)
-        avatar = ""
+        avatar_filename = ""
         if(len(avatares) >= 1):
-            avatar = avatares[0]
-            avatar_filename = avatar.imagen.name
+            avatar_filename = avatares[0].imagen.name
         form = UserEditForm(initial={'email': usuario.email, 
                                              'first_name': usuario.first_name, 
                                              'last_name': usuario.last_name,
