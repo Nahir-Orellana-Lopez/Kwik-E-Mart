@@ -48,7 +48,15 @@
           </td>
         </tr>
       {% endfor %}
+      
     </tbody>
+    <tfoot>
+      <tr>
+        <td></td>
+        <td>Total</td>
+        <td>${{total}}</td>
+      </tr>
+    </tfoot>
   </table>
   {% if carrito|length == 0 %}
     <p>No hay items aún</p>
