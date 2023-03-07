@@ -31,7 +31,7 @@ class ArticuloFormulario(forms.Form):
     precio_unitario = forms.FloatField(label='Precio Unitario', min_value=0, widget=forms.NumberInput(attrs={'class':'form-control', 'step': "0.1"}))
     stock = forms.IntegerField(label='Stock',min_value=0, widget=forms.NumberInput(attrs={'class':'form-control'}))
     disponible = forms.BooleanField(initial=True, required=False, label='Disponible', widget=forms.CheckboxInput(attrs={'class': 'checkbox'}))
-    imagen = forms.ImageField(required=False, label='Imagen', widget=forms.FileInput(attrs={'class':'form-control'}))
+    imagen = forms.ImageField(required=False, label='Cambiar Imagen', widget=forms.FileInput(attrs={'class':'form-control'}))
 
     class Meta:
        model = Articulo

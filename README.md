@@ -1,6 +1,6 @@
-# Tercera-pre-entrega-Orellana-Lopez 
+# Proyecto Final Nahir Orellana Lopez 
 
-# Kwik-E-Mart Online (Trabajo en Progreso)
+# Kwik-E-Mart Online
 
 ## Pantalla de Inicio
 ![imagen](https://user-images.githubusercontent.com/124831483/219971073-a0766802-99de-4c9e-92d2-d0d165cb992f.png)
