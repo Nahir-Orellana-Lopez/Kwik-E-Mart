@@ -38,18 +38,22 @@
               {% else %}
                 <a class="nav-link" href="{% url 'Clientes' %}">Clientes</a>
               {% endif %}
+              <a class="nav-link" href="{% url 'AcercaDeMi' %}">Acerca de mí</a>
+
               <a class="nav-link" href="{% url 'Perfil' %}">
-                Perfil
+                Mi Perfil
+                {% if request.user.is_staff %}
+                {{"(Admin)"}}
+                {% endif %}
               </a>
               <form action="/accounts/logout/">
                 <label class="nav-link" role="button" for="logout">Logout</label>
-                <input class="d-none" id="logout" name="logout" type="submit" value="Logout" onclick="return confirm('Are you sure?')"/>
+                <input class="d-none" id="logout" name="logout" type="submit" value="Logout" onclick="return confirm('Gracias por venir, vuelvan prontos!')"/>
               </form>
             {% else %}
               <a class="nav-link" href="{% url 'Login' %}">Login</a>
               <a class="nav-link" href="{% url 'Signup' %}">Registro</a>
             {% endif %}
-            <a class="nav-link" href="{% url 'AcercaDeMi' %}">Acerca de mí</a>
 
           </div>
         </div>
@@ -57,7 +61,7 @@
     </nav>
     <br/>
 
-    <div class="container">
+    <div class="container-sm">
       {% block contenidoQueCambia %}{% endblock %}
     </div>
     <br/>

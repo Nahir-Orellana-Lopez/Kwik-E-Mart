@@ -19,15 +19,22 @@ def inicio(request):
     return HttpResponse(documento)
 
 def articulos(request):
-    categorias = request.GET.get('categorias', '')
-    nombre = request.GET.get('nombre', '')
-    marca = request.GET.get('marca', '')
+    button = request.GET.get('button', '')
+    categorias = ''
+    nombre = ''
+    marca = ''
+    if button == 'Buscar':
+        categorias = request.GET.get('categorias', '')
+        nombre = request.GET.get('nombre', '')
+        marca = request.GET.get('marca', '')
     articulos = Articulo.objects.filter(categorias__icontains=categorias,
                                         nombre__icontains=nombre,
                                         marca__icontains=marca).order_by('nombre')
     if(not request.user.is_staff):
         articulos = articulos.filter(disponible=True)
-    contexto = {"articulos": articulos,"categoria":categorias, "nombre":nombre, "marca":marca}
+    for a in articulos:
+        a.categorias = literal_eval(a.categorias)
+    contexto = {"articulos": articulos,"categorias":categorias, "nombre":nombre, "marca":marca}
     plantilla = loader.get_template("compras/articulos.html")
     documento = plantilla.render(contexto,request)
     return HttpResponse(documento)
@@ -102,6 +109,7 @@ def eliminarArticulo(request, articulo_id):
 
 def verArticulo(request, articulo_id):
     articulo = Articulo.objects.get(id=articulo_id)
+    articulo.categorias = literal_eval(articulo.categorias)
     contexto = {"articulo": articulo}
     plantilla = loader.get_template("compras/articulo.html")
     documento = plantilla.render(contexto,request)

@@ -8,8 +8,8 @@
       <thead>
       <tr>
         <th>Imagen</th>
-        <th>Marca</th>
         <th>Nombre</th>
+        <th>Marca</th>
         <th>Precio Unitario</th>
         <th>Cantidad</th>
         <th>Suma Parcial</th>
@@ -26,16 +26,16 @@
               <img width="100" src="{% static 'compras/assets/img/no-image.png' %}"/>
             {% endif %}
           </td>
-          <td>{{i.articulo.marca}}</td>
           <td>{{i.articulo.nombre}}</td>
+          <td>{{i.articulo.marca}}</td>
           <td>${{i.articulo.precio_unitario}}</td>
           <td>
             <form class="row" action="/compras/carrito/set/{{i.id}}" method="POST">
               {% csrf_token %}
-              <div class="col-8 align-self-end">
+              <div class="col-7 align-self-end px-1">
                 <input onChange="form.submit()" type="number" class="form-control form-control-sm" name="cantidad" id="cantidad" value="{{i.cantidad}}" min="1" max="{{i.articulo.stock}}">
               </div>
-              <div class="col-4 align-self-end">
+              <div class="col-5 align-self-end px-1">
                 /{{i.articulo.stock}}
               </div>
             </form>
@@ -53,4 +53,7 @@
   {% if carrito|length == 0 %}
     <p>No hay items aún</p>
   {% endif %}
+  <a href="{% url 'Articulos' %}">
+    <button type="button" class="btn btn-success">Seguir Comprando</button>
+  </a>
 {% endblock %}

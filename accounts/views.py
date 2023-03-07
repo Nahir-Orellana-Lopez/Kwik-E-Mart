@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse, HttpResponseRedirect
+from django import forms
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.admin.views.decorators import staff_member_required
@@ -39,8 +40,9 @@ def signup(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
-            form.save()
-            avatar = Avatar(user=form.id, imagen=form.cleaned_data["avatar_img"])
+            user = form.save(commit=False)
+            user.save()
+            avatar = Avatar(user=user, imagen=form.cleaned_data["avatar_img"])
             avatar.save()
             url = reverse('Login')
             return HttpResponseRedirect(url)
@@ -73,11 +75,11 @@ def editarPerfil(request):
         avatar_filename = ""
         if(len(avatares) >= 1):
             avatar_filename = avatares[0].imagen.name
-        form = UserEditForm(initial={'email': usuario.email, 
-                                             'first_name': usuario.first_name, 
-                                             'last_name': usuario.last_name,
-                                             'username': usuario.username,
-                                             'avatar_img': avatar_filename})
+        form = UserEditForm(instance=request.user, initial={'email': usuario.email, 
+                                    'first_name': usuario.first_name, 
+                                    'last_name': usuario.last_name,
+                                    'username': usuario.username,
+                                    'avatar_img': avatar_filename})
     return render(request, "accounts/editarPerfil.html", {"form": form, "usuario": usuario})
 
 @login_required
