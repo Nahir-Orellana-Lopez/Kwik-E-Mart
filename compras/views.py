@@ -117,14 +117,19 @@ def verArticulo(request, articulo_id):
 
 
 @login_required
-def carrito(request):
+def carrito(request, cliente_id=None):
     total = 0
-    cliente = request.user
-    carrito = ItemCarrito.objects.all().filter(cliente_id=cliente.id)
+    if not cliente_id:
+        usuario = request.user
+    else:
+        usuario = User.objects.get(id=cliente_id)
+        if not request.user.is_staff:
+            return HttpResponseRedirect('/compras')
+    carrito = ItemCarrito.objects.all().filter(cliente_id=usuario.id)
     for i in carrito:
         i.suma_parcial = i.articulo.precio_unitario * i.cantidad
         total += i.suma_parcial
-    contexto = {"carrito": carrito, "total": total}
+    contexto = {"carrito": carrito, "total": total, "usuario":usuario}
     plantilla = loader.get_template("compras/carrito.html")
     documento = plantilla.render(contexto,request)
     return HttpResponse(documento)

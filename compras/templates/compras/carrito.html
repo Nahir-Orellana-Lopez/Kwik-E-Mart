@@ -3,7 +3,7 @@
 <br/>
 {% block contenidoQueCambia %}
   <h4>Carrito de
-    {{request.user.first_name}}</h4>
+    {{usuario.first_name}}</h4>
     <table class="table">
       <thead>
       <tr>
@@ -13,7 +13,9 @@
         <th>Precio Unitario</th>
         <th>Cantidad</th>
         <th>Suma Parcial</th>
-        <th>Acción</th>
+        {% if not request.user.is_staff %}
+          <th>Acción</th>
+        {% endif %}
       </tr>
     </thead>
     <tbody>
@@ -29,26 +31,33 @@
           <td>{{i.articulo.nombre}}</td>
           <td>{{i.articulo.marca}}</td>
           <td>${{i.articulo.precio_unitario}}</td>
-          <td>
-            <form class="row" action="/compras/carrito/set/{{i.id}}" method="POST">
-              {% csrf_token %}
-              <div class="col-7 align-self-end px-1">
-                <input onChange="form.submit()" type="number" class="form-control form-control-sm" name="cantidad" id="cantidad" value="{{i.cantidad}}" min="1" max="{{i.articulo.stock}}">
-              </div>
-              <div class="col-5 align-self-end px-1">
-                /{{i.articulo.stock}}
-              </div>
-            </form>
-          </td>
+            <td>
+              {% if not request.user.is_staff %}
+                <form class="row" action="/compras/carrito/set/{{i.id}}" method="POST">
+                  {% csrf_token %}
+                  <div class="col-7 align-self-end px-1">
+                    <input onChange="form.submit()" type="number" class="form-control form-control-sm" name="cantidad" id="cantidad" value="{{i.cantidad}}" min="1" max="{{i.articulo.stock}}">
+                  </div>
+                  <div class="col-5 align-self-end px-1">
+                    /{{i.articulo.stock}}
+                  </div>
+                </form>
+              {% else %}
+                <div class="col-5 align-self-end px-1">
+                  {{i.cantidad}}/{{i.articulo.stock}}
+                </div>
+              {% endif %}
+            </td>
           <td>${{i.suma_parcial}}</td>
-          <td>
-            <a href="{% url 'EliminarItem' i.id %}">
-              <button type="button" class="btn btn-danger btn-sm w-100">Eliminar</button>
-            </a>
-          </td>
+          {% if not request.user.is_staff %}
+            <td>
+              <a href="{% url 'EliminarItem' i.id %}">
+                <button type="button" class="btn btn-danger btn-sm w-100">Eliminar</button>
+              </a>
+            </td>
+          {% endif %}
         </tr>
       {% endfor %}
-      
     </tbody>
     <tfoot>
       <tr>
@@ -61,7 +70,13 @@
   {% if carrito|length == 0 %}
     <p>No hay items aún</p>
   {% endif %}
-  <a href="{% url 'Articulos' %}">
-    <button type="button" class="btn btn-success">Seguir Comprando</button>
-  </a>
+  {% if not request.user.is_staff %}
+    <a href="{% url 'Articulos' %}">
+      <button type="button" class="btn btn-success">Seguir Comprando</button>
+    </a>
+  {% else %}
+    <a href="{% url 'Clientes' %}">
+      <button type="button" class="btn btn-primary">Volver</button>
+    </a>
+  {% endif %}
 {% endblock %}
