@@ -25,7 +25,7 @@ Python - SQLite - Django - HTML - Bootstrap
 - _Registro_: Lleva a la página de registro de usuarios
 
 ## Login como Admin
-<img src="https://user-images.githubusercontent.com/124831483/223580540-e9765f1a-7c69-4254-8bb4-cd2ae82bf392.png" width=400px>
+<img src="https://user-images.githubusercontent.com/124831483/223580540-e9765f1a-7c69-4254-8bb4-cd2ae82bf392.png" width=350px>
 
 - Usuario: apu
 - Contraseña: contraseña
@@ -41,7 +41,7 @@ Python - SQLite - Django - HTML - Bootstrap
 - [Agregar]: (Botón al final de la página) Lleva al formulario de creación de un nuevo artículo
 
 #### Agregar Artículo
-<img src="https://user-images.githubusercontent.com/124831483/223583634-849da785-87b8-4078-b4f1-4149ee89b2c3.png" width=400px>
+<img src="https://user-images.githubusercontent.com/124831483/223583634-849da785-87b8-4078-b4f1-4149ee89b2c3.png" width=350px>
 
 - [Guardar]: Guarda el artículo y redirige a la lista de artículos
 
@@ -58,7 +58,7 @@ Python - SQLite - Django - HTML - Bootstrap
 - [Ver]: Muestra los items del carrito del cliente seleccionado, sin las funcionalidades de agregar o eliminar
 
 ## Registro de Cliente
-<img src="https://user-images.githubusercontent.com/124831483/223588541-30c98051-21d7-4546-87a3-81e893b052b3.png" width=400px>
+<img src="https://user-images.githubusercontent.com/124831483/223588541-30c98051-21d7-4546-87a3-81e893b052b3.png" width=350px>
 
 ## Login como Cliente
 - Usuario: homero
@@ -84,7 +84,7 @@ Python - SQLite - Django - HTML - Bootstrap
 - [Seguir Comprando]: Dirige a la lista de artículos
 
 #### Mi Perfil
-<img src="https://user-images.githubusercontent.com/124831483/223591622-00591e5a-54df-4ea9-9d11-a6c4c0d17564.png" width=400px>
+<img src="https://user-images.githubusercontent.com/124831483/223591622-00591e5a-54df-4ea9-9d11-a6c4c0d17564.png" width=300px>
 
 - [Cambiar Contraseña]: Dirige a la página de cambio de contraseña
 - [Guardar]: Guarda los cambios del usuario
