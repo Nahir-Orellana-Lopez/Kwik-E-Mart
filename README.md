@@ -1,40 +1,85 @@
-# Proyecto Final Nahir Orellana Lopez 
+## Proyecto Final de Coderhouse - Nahir Orellana Lopez 
+
+El proyecto se trata de una página web que simula una tienda online del conocido minimercado de los Simpsons, el Kwik-E-Mart. Cuenta con usuarios admin y clientes. Los admin pueden agregar, editar y eliminar artículos. Los clientes pueden agregar artículos a sus carritos de compra.
+
+### Acerca de mí
+Mi nombre es Nahir Orellana Lopez, soy profesora de matemática y estudiante de la tecnicatura universitaria en desarrollo web. 
+
+### Tecnologías
+Python - SQLite - Django - HTML - Bootstrap
 
 # Kwik-E-Mart Online
 
 ## Pantalla de Inicio
-![imagen](https://user-images.githubusercontent.com/124831483/219971073-a0766802-99de-4c9e-92d2-d0d165cb992f.png)
+<img src="https://user-images.githubusercontent.com/124831483/223578483-047dbacd-8810-4e80-97b7-9c6269c9fef6.png" width=500px>
+
 ### Navegación
-- _Inicio_: Lleva al inicio
-- _Clientes_: Ver lista y funcionalidades de todos los clientes
+- _Inicio_: Lleva a la página de inicio
 - _Artículos_: Ver lista y funcionalidades de todos los artículos
+- (Sólo Admin)
+  - _Clientes_: Ver lista y funcionalidades de todos los clientes
+- (Sólo Cliente)
+  - _Carrito_: Ver items del carrito de compras
+- _Acerca de_: Ver información del dueño de la tienda virtual
+- _Login_: Lleva a la página de login de usuarios
+- _Registro_: Lleva a la página de registro de usuarios
 
-## Funcionalidades
+## Login como Admin
+<img src="https://user-images.githubusercontent.com/124831483/223580540-e9765f1a-7c69-4254-8bb4-cd2ae82bf392.png" width=300px>
 
-### Clientes
-![imagen](https://user-images.githubusercontent.com/124831483/219970652-8cb61acd-b32e-4494-a591-755ee1e482ed.png)
-#### Botones
-- [Carrito]: Ver carrito del cliente
-- [Buscar]: Ver búsqueda de artículos para el cliente
-- [Eliminar]: Elimina el cliente
-#### Formulario
-- Agregar Cliente: Crea un nuevo cliente
+- Usuario: apu
+- Contraseña: contraseña
 
-### Carrito del cliente
-![imagen](https://user-images.githubusercontent.com/124831483/219971042-a968d6aa-b5b7-444f-9f74-07a899055e85.png)
-#### Botones
-- [Eliminar]: Elimina el ítem del carrito
-- [Seguir comprando]: Ver búsqueda de artículos para el cliente
+### Funcionalidades
+#### Ver Artículos
+<img src="https://user-images.githubusercontent.com/124831483/223580935-9d7b20ac-9d10-4dca-a6be-f90b2f08379c.png" width=500px>
 
-### Búsqueda de Artículos
-![imagen](https://user-images.githubusercontent.com/124831483/219971272-edb687bd-5014-49d3-98dd-31f967da7922.png)
-#### Formularios
-- Buscar/Filtrar: Busca artículos en la base de datos de acuerdo a su categoría, nombre y/o marca
-- Agregar Ítem: Añade la cantidad indicada del artículo seleccionado y redirige al carrito del cliente
-
-### Artículos
-![imagen](https://user-images.githubusercontent.com/124831483/219971589-dd369095-01ac-4e72-84e2-812095337909.png)
-#### Botones
+- [Buscar]: Busca artículos por los criterios de nombre, marca y categoría
+- [Limpiar]: Limpia el filtro de búsqueda
+- [Ver]: Dirige al detalle del artículo
 - [Eliminar]: Elimina el artículo
-#### Formulario
-- Agregar Artículo: Crea un nuevo artículo
+- [Agregar]: (Botón al final de la página) Lleva al formulario de creación de un nuevo artículo
+
+#### Agregar Artículo
+<img src="https://user-images.githubusercontent.com/124831483/223583634-849da785-87b8-4078-b4f1-4149ee89b2c3.png" width=300px>
+
+- [Guardar]: Guarda el artículo y redirige a la lista de artículos
+
+#### Ver Detalle de Artículo
+<img src="https://user-images.githubusercontent.com/124831483/223582912-5baeb70d-89b5-42b9-bd5c-413a5fee0c80.png" width=500px>
+
+- [Editar]: Lleva a la página de edición del artículo (Similar a [Agregar])
+- [Eliminar]: Elimina el artículo
+- [Volver]: Vuelve a la lista de artículos
+
+#### Ver Clientes
+<img src="https://user-images.githubusercontent.com/124831483/223581976-33374a38-7360-404a-80a1-1eab71825446.png" width=500px>
+
+- [Ver]: Muestra los items del carrito del cliente seleccionado, sin las funcionalidades de agregar o eliminar
+
+## Registro de Cliente
+<img src="https://user-images.githubusercontent.com/124831483/223588541-30c98051-21d7-4546-87a3-81e893b052b3.png" width=300px>
+
+## Login como Cliente
+- Usuario: homero
+- Contraseña: contraseña
+
+### Funcionalidades
+#### Ver Artículos
+<img src="https://user-images.githubusercontent.com/124831483/223591040-cd74e5a7-8434-4158-8c41-30217b45c4a2.png" width=500px>
+
+- [Ver]: Dirige al detalle del artículo
+- [Agregar]: Agrega un ítem al carrito de compras con la cantidad especificada
+
+#### Ver Carrito
+<img src="https://user-images.githubusercontent.com/124831483/223589696-95d15de2-57a6-4fcf-a08f-4b7cb630a1ef.png" width=500px>
+
+- [Cambiar]: Cambia la cantidad del ítem, teniendo como máximo el stock del artículo. Al hacerlo se actualizan los costos
+- [Eliminar]: Elimina el ítem del carrito
+- [Seguir Comprando]: Dirige a la lista de artículos
+
+#### Mi Perfil
+<img src="https://user-images.githubusercontent.com/124831483/223591622-00591e5a-54df-4ea9-9d11-a6c4c0d17564.png" width=350px>
+
+- [Cambiar Contraseña]: Dirige a la página de cambio de contraseña
+- [Guardar]: Guarda los cambios del usuario
