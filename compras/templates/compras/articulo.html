@@ -86,7 +86,7 @@
         <h5>Dejar una valoración</h5>
 
         {% if not ya_valorado %}
-          <div class="card" style="width: 24rem;">
+          <div class="card">
             <div class="card-body">
               <form autocomplete="off" action="/compras/articulos/valorar/{{articulo.id}}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
