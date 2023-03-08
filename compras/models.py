@@ -37,3 +37,12 @@ class ItemCarrito(models.Model):
         
     def quitar(self):
         self.cantidad-=1
+
+class Mensaje(models.Model):
+    cliente = models.ForeignKey(User, on_delete=models.CASCADE)
+    articulo = models.ForeignKey(Articulo, on_delete=models.CASCADE)
+    mensaje = models.CharField(max_length=200)
+    imagen = models.ImageField()
+
+    def __str__(self):
+        return f"{self.cliente} - {self.articulo} - {self.escala}"

@@ -1,0 +1,9 @@
+{% if widget.wrap_label %}
+  <label{% if widget.attrs.id %} for="{{ widget.attrs.id }}" {% endif %}>
+  {% endif %}{% include "django/forms/widgets/input.html" %}
+  {% if widget.wrap_label %}
+  </label>
+{% endif %}
+{% load static %}
+<img width="40" src="{% static 'compras/assets/escalas/' %}{{ widget.value }}"/>  {{widget.label}}
+

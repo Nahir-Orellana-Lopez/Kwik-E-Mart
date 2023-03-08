@@ -4,9 +4,9 @@ from django.template import loader
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from compras.forms import ArticuloFormulario, ItemFormulario
+from compras.forms import ArticuloFormulario, ItemFormulario, MensajeFormulario
 from accounts.models import Avatar
-from .models import Articulo, ItemCarrito
+from .models import Articulo, ItemCarrito, Mensaje
 from ast import literal_eval
 
 def inicio(request):
@@ -108,13 +108,36 @@ def eliminarArticulo(request, articulo_id):
     return HttpResponseRedirect('/compras/articulos')
 
 def verArticulo(request, articulo_id):
-    articulo = Articulo.objects.get(id=articulo_id)
+    try:
+        articulo = Articulo.objects.get(id=articulo_id)
+    except Articulo.DoesNotExist:
+        return HttpResponseRedirect("/compras/articulos")
     articulo.categorias = literal_eval(articulo.categorias)
-    contexto = {"articulo": articulo}
+    valoraciones = Mensaje.objects.filter(articulo=articulo_id)
+    valoraciones_cliente = valoraciones.filter(cliente=request.user.id)
+    ya_valorado = False
+    if(len(valoraciones_cliente)!=0):
+        ya_valorado = True
+    form = MensajeFormulario()
+    contexto = {"articulo": articulo, "form": form, "ya_valorado": ya_valorado, "valoraciones": valoraciones}
     plantilla = loader.get_template("compras/articulo.html")
     documento = plantilla.render(contexto,request)
     return HttpResponse(documento)
 
+@login_required
+def valorarArticulo(request, articulo_id):
+    form = MensajeFormulario()
+    if request.method == 'POST':
+        form = MensajeFormulario(request.POST)
+        if form.is_valid():
+            informacion = form.cleaned_data
+            mensaje = Mensaje(
+                            cliente=request.user,
+                            articulo = Articulo(id=articulo_id),
+                            mensaje=informacion['mensaje'],  
+                            imagen=informacion["escala_img"])
+            mensaje.save()
+            return HttpResponseRedirect("/compras/articulos/"+articulo_id)
 
 @login_required
 def carrito(request, cliente_id=None):

@@ -40,7 +40,7 @@
             {% for c in articulo.categorias %}
               <div class="badge badge-info">{{c}}</div>
             {% endfor %}
-          <div>
+          </div>
         </td>
         {% if request.user.is_authenticated %}
           <td>
@@ -74,7 +74,53 @@
       </tr>
     </tbody>
   </table>
+
   <a href="{% url 'Articulos' %}">
     <button type="button" class="btn btn-primary">Volver</button>
   </a>
+  <br/>
+  <br/>
+  <div class="d-flex gap-3">
+    {% if request.user.is_authenticated and not request.user.is_staff %}
+      <div class="w-50">
+        <h5>Dejar una valoración</h5>
+
+        {% if not ya_valorado %}
+          <div class="card" style="width: 24rem;">
+            <div class="card-body">
+              <form autocomplete="off" action="/compras/articulos/valorar/{{articulo.id}}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button type="submit" class="btn btn-success">Enviar</button>
+              </form>
+            </div>
+          </div>
+        {% else %}
+          Gracias por dejar su valoración
+        {% endif %}
+
+      </div>
+    {% endif %}
+    <div class="w-100">
+      <h5>Valoraciones</h5>
+      {% if valoraciones|length == 0 %}
+        <p>No hay valoraciones aún</p>
+      {% endif %}
+      {% for v in valoraciones %}
+        <div class="card ">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+            <h5 class="card-subtitle mb-2 text-muted">{{v.cliente.username}}</h5>
+            <p class="card-text">
+              Escala de Krusty: <img width="32" src="{% static 'compras/assets/escalas/' %}{{ v.imagen }}"/>
+              </p>
+            </div>
+            <p class="card-text">
+              {{v.mensaje}}</p>
+          </div>
+        </div>
+
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}

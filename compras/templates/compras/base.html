@@ -44,7 +44,7 @@
           {% if request.user.is_authenticated %}
             <div class="navbar-nav justify-content-end">
               <a class="nav-link" href="{% url 'Perfil' %}">
-                Mi Perfil
+                Mi Perfil ({{request.user.username}})
                 {% if request.user.is_staff %}
                   {{"(Admin)"}}
                 {% endif %}

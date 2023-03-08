@@ -1,10 +1,14 @@
 from django import forms
-from .models import Articulo
+from .models import Articulo, Mensaje
 
-# class ClienteFormulario(forms.Form):
-#     nombre = forms.CharField(max_length=200)
-#     email = forms.EmailField(max_length=200)
-#     habilitado = forms.BooleanField(initial=True, required=False)
+class CustomRadioSelect(forms.RadioSelect):
+    option_template_name = 'compras/radio_option_custom.html'
+
+ESCALA_CHOICES = (
+    ("excelente.png", 'Excelente'),
+    ("neutral.png", 'Neutral'),
+    ("terrible.png", 'Terrible'),
+)
 
 opcionesCategoria = (
     ('bebidas','Bebidas'),
@@ -31,7 +35,7 @@ class ArticuloFormulario(forms.Form):
     precio_unitario = forms.FloatField(label='Precio Unitario', min_value=0, widget=forms.NumberInput(attrs={'class':'form-control', 'step': "0.1"}))
     stock = forms.IntegerField(label='Stock',min_value=0, widget=forms.NumberInput(attrs={'class':'form-control'}))
     disponible = forms.BooleanField(initial=True, required=False, label='Disponible', widget=forms.CheckboxInput(attrs={'class': 'checkbox'}))
-    imagen = forms.ImageField(required=False, label='Cambiar Imagen', widget=forms.FileInput(attrs={'class':'form-control'}))
+    imagen = forms.ImageField(required=False, label='Imagen', widget=forms.FileInput(attrs={'class':'form-control'}))
 
     class Meta:
        model = Articulo
@@ -39,3 +43,12 @@ class ArticuloFormulario(forms.Form):
     
 class ItemFormulario(forms.Form):
     cantidad = forms.IntegerField()
+
+class MensajeFormulario(forms.Form):
+    mensaje = forms.CharField(required=False, max_length=200, label='Mensaje (Opcional)', widget=forms.Textarea(attrs={'class':'form-control', "rows":"2"}))
+    escala_img = forms.ChoiceField(required=True, label='Escala de Krusty', widget=CustomRadioSelect(), choices = ESCALA_CHOICES)
+
+    class Meta:
+        model = Mensaje
+        fields = ('mensaje', 'escala_img')
+
