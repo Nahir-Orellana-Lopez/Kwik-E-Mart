@@ -20,7 +20,7 @@
     </thead>
     <tbody>
       {% for i in carrito %}
-        <tr>
+        <tr id="{{i.id}}">
           <td>
             {% if i.articulo.imagen %}
               <img width="100" src="{{ i.articulo.imagen.url }}"/>

@@ -192,7 +192,7 @@ def setItem(request, item_id):
         else:
             item.cantidad = item.articulo.stock
         item.save()
-    return HttpResponseRedirect('/compras/carrito/')
+    return HttpResponseRedirect('/compras/carrito/#'+item_id)
 
 def acercaDeMi(request):
     plantilla = loader.get_template("compras/acercaDeMi.html")

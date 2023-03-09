@@ -32,6 +32,10 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('email', 'username', 'first_name', 'last_name', 'password1', 'password2', 'avatar_img')
+    
+    def __init__(self, *args, **kwargs):
+        super(UserRegisterForm, self).__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.pop("autofocus", None)
 
 class UserEditForm(UserChangeForm):
     password = None

@@ -17,7 +17,7 @@ opcionesCategoria = (
     ('azar','Azar'),
     ('juguetes','Juguetes'),
     ('almacen','Almacén'),
-    ('golosinas','Golosinas'),
+    ('dulces','Dulces'),
     ('limpieza','Limpieza'),
     ('congelados','Congelados'),
     ('desayuno','Desayuno'),
@@ -25,6 +25,7 @@ opcionesCategoria = (
     ('tabaco','Tabaco'),
     ('revistas','Revistas'),
     ('deportes','Deportes'),
+    ('farmacia', 'Farmacia'),
     ('otro', 'Otro'),
     )
 

@@ -4,7 +4,7 @@
 
 <div class="card" style="width: 24rem;">
   <div class="card-body">
-    <form action="" method="POST">
+    <form action="" method="POST" autocomplete: 'off'>
       {% csrf_token %} {{ form.as_p }}
       <button type="submit" class="btn btn-success">Registrarse</button>
     </form>
