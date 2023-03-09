@@ -72,8 +72,7 @@ Python - SQLite - Django - HTML - Bootstrap
 - [Agregar]: Agrega un ítem al carrito de compras con la cantidad especificada
 
 #### Ver/Valorar Artículo
-<img src="https://user-images.githubusercontent.com/124831483/223618373-e24e0892-2fa3-4251-b57e-8a88e937e109.png" width=800px>
-
+<img src="https://user-images.githubusercontent.com/124831483/223620245-742765f0-a647-495b-b861-9d6253f35227.png" width=600px>
 - [Enviar]: Envía la valoración del artículo y la agrega a la lista
 
 #### Ver Carrito
