@@ -2,6 +2,10 @@
 
 El proyecto se trata de una página web que simula una tienda online del conocido minimercado de los Simpsons, el Kwik-E-Mart. Cuenta con usuarios admin y clientes. Los admin pueden agregar, editar y eliminar artículos. Los clientes pueden agregar artículos a sus carritos de compra y valorarlos.
 
+### Video explicativo
+
+https://user-images.githubusercontent.com/124831483/224186114-4997497b-e237-4780-b023-a1557a87e978.mp4
+
 ### Acerca de mí
 Mi nombre es Nahir Orellana Lopez, soy profesora de matemática y estudiante de la tecnicatura universitaria en desarrollo web. 
 
